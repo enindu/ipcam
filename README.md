@@ -1,0 +1,7 @@
+# IPCAM
+
+I had a problem: I wanted to monitor my baby when neither my wife nor I were in the room. It's difficult to hear her cry from most parts of my house when both of us are out of the room. So, I came up with an idea. Since all of my devices are connected to the same network, which is my WiFi network, I thought I could turn on my laptop's webcam and view it from my phone anywhere in the house. That's why I created this software. I know there are plenty of software and apps out there for this purpose, but I'm a software engineer, so I wanted to build my own solution.
+
+This software will only work on Linux distributions because it uses the V4L2 library. Even on a Linux distribution, it may not work for everyone. I want to make it clear that this is not a universal software; I designed it specifically for my laptop. If you want to run it on your computer, you'll need to figure out how to adapt it to your setup.
+
+Nevertheless, I believe this will be a helpful example for anyone who needs to work with the Go programming language and webcams. There aren't many simple examples like this available. In my opinion, when someone provides an example, it should be straightforward and without extensive error-handling code. It's the developer's responsibility to implement additional features and error handling. The example code should demonstrate how to do the core task and nothing more.
