@@ -17,9 +17,9 @@ const (
 )
 
 var (
+	frame            = make(chan []byte)
 	connections      = make(map[*websocket.Conn]bool)
 	connectionsMutex = sync.Mutex{}
-	frame            = make(chan []byte)
 )
 
 func main() {
