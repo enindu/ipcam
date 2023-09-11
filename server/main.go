@@ -102,7 +102,7 @@ func index(w http.ResponseWriter, r *http.Request) {
 
 	for existingConnection := range connections {
 		if strings.Split(existingConnection.RemoteAddr().String(), ":")[0] == strings.Split(connection.RemoteAddr().String(), ":")[0] {
-			log.Printf("%s is disconnected (Existing)\n", existingConnection.RemoteAddr().String())
+			log.Printf("%s is disconnected\n", existingConnection.RemoteAddr().String())
 			existingConnection.Close()
 			delete(connections, existingConnection)
 		}
