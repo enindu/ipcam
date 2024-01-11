@@ -13,7 +13,6 @@ import (
 
 const (
 	V4L2_JPEG = 0x47504A50
-	V4L2_YUYV = 0x56595559
 )
 
 var (
