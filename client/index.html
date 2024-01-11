@@ -1,51 +1,54 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="utf-8" />
-        <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-        <title>IPCam</title>
-        <style>
-            * {
-                box-sizing: border-box;
-                margin: 0;
-                padding: 0;
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>IPCam</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="canvas" width="640" height="480"></canvas>
+    <script>
+        const websocket = new WebSocket('ws://192.168.43.76:8000');
+        const canvas = document.getElementById('canvas');
+        const context = canvas.getContext('2d');
+        const image = new Image();
+
+        websocket.addEventListener('open', (event) => {
+            console.log('Connected to WebSocket server');
+        });
+
+        websocket.addEventListener('message', (event) => {
+            if (event.data) {
+                const objectUrl = URL.createObjectURL(event.data);
+
+                image.onload = () => {
+                    context.clearRect(0, 0, canvas.width, canvas.height);
+                    context.drawImage(image, 0, 0, canvas.width, canvas.height);
+
+                    URL.revokeObjectURL(objectUrl);
+                };
+
+                image.src = objectUrl;
             }
-        </style>
-    </head>
-    <body>
-        <canvas id="canvas" width="640" height="480"></canvas>
-        <script>
-            const websocket = new WebSocket('ws://192.168.43.76:8000');
-            const canvas = document.getElementById('canvas');
-            const context = canvas.getContext('2d');
-            const image = new Image();
+        });
 
-            websocket.addEventListener('open', (event) => {
-                console.log('Connected to WebSocket server');
-            });
+        websocket.addEventListener('close', (event) => {
+            console.log('Disconnected from WebSocket server');
+        });
 
-            websocket.addEventListener('message', (event) => {
-                if (event.data) {
-                    const objectUrl = URL.createObjectURL(event.data);
+        websocket.addEventListener('error', (event) => {
+            console.error('Error occurred:', event);
+        });
+    </script>
+</body>
 
-                    image.onload = () => {
-                        context.clearRect(0, 0, canvas.width, canvas.height);
-                        context.drawImage(image, 0, 0, canvas.width, canvas.height);
-
-                        URL.revokeObjectURL(objectUrl);
-                    };
-
-                    image.src = objectUrl;
-                }
-            });
-
-            websocket.addEventListener('close', (event) => {
-                console.log('Disconnected from WebSocket server');
-            });
-
-            websocket.addEventListener('error', (event) => {
-                console.error('Error occurred:', event);
-            });
-        </script>
-    </body>
 </html>
